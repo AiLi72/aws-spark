@@ -15,24 +15,28 @@ public class CreateInstance {
 
         String name = "master";
         String amiId = "ami-098555c9b343eb09c";
+        String keyName = "KeyPair";
+        String SecurityGroup = "security-group";
 
         Region region = Region.US_WEST_2;
         Ec2Client ec2 = Ec2Client.builder()
                 .region(region)
                 .build();
 
-        String instanceId = createEC2Instance(ec2,name, amiId) ;
+        String instanceId = createEC2Instance(ec2,name, amiId,keyName,SecurityGroup) ;
         System.out.println("The Amazon EC2 Instance ID is "+instanceId);
         ec2.close();
     }
 
-    public static String createEC2Instance(Ec2Client ec2,String name, String amiId ) {
+    public static String createEC2Instance(Ec2Client ec2,String name, String amiId ,String keyName,String SecurityGroup) {
 
         RunInstancesRequest runRequest = RunInstancesRequest.builder()
                 .imageId(amiId)
                 .instanceType(InstanceType.T2_MICRO)
                 .maxCount(1)
                 .minCount(1)
+                .keyName(keyName)
+                .securityGroups(SecurityGroup)
                 .build();
 
         RunInstancesResponse response = ec2.runInstances(runRequest);

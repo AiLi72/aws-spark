@@ -6,6 +6,11 @@ import software.amazon.awssdk.services.ec2.model.CreateKeyPairRequest;
 import software.amazon.awssdk.services.ec2.model.CreateKeyPairResponse;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CreateKeyPair {
     public static void main(String[] args) {
 
@@ -29,11 +34,26 @@ public class CreateKeyPair {
             System.out.printf(
                     "Successfully created key pair named %s",
                     keyName);
-            //save the keyPair ??
+
+            File file = new File("key-pair.pem");
+
+            if(file.exists()) {
+                file.delete();
+            }
+
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file);
+            fw.write(response.keyMaterial());
+            fw.close();
 
         } catch (Ec2Exception e) {
             System.err.println(e.awsErrorDetails().errorMessage());
             System.exit(1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
