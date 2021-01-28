@@ -2,21 +2,16 @@ package com.example.ec2;
 
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ec2.Ec2Client;
-import software.amazon.awssdk.services.ec2.model.InstanceType;
-import software.amazon.awssdk.services.ec2.model.RunInstancesRequest;
-import software.amazon.awssdk.services.ec2.model.RunInstancesResponse;
-import software.amazon.awssdk.services.ec2.model.Tag;
-import software.amazon.awssdk.services.ec2.model.CreateTagsRequest;
-import software.amazon.awssdk.services.ec2.model.Ec2Exception;
+import software.amazon.awssdk.services.ec2.model.*;
 
 
-public class CreateInstance {
+public class CreateInstanceMaster {
     public static void main(String[] args) {
 
         String name = "master";
         String amiId = "ami-098555c9b343eb09c";
-        String keyName = "KeyPair";
-        String SecurityGroup = "security-group";
+        String keyName = "KeyPairAi";
+        String SecurityGroup = "security-groupAi";
 
         Region region = Region.US_WEST_2;
         Ec2Client ec2 = Ec2Client.builder()

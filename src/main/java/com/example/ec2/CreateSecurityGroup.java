@@ -14,7 +14,7 @@ import software.amazon.awssdk.services.ec2.model.IpRange;
 public class CreateSecurityGroup {
 
     public static void main(String[] args) {
-        String groupName = "security-group";
+        String groupName = "security-groupAi";
         String groupDesc = "security group";
         String vpcId = "vpc-bb194ec3";
 

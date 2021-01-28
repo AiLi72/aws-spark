@@ -11,7 +11,7 @@ import java.util.List;
 public class TernimateInstace {
     public static void main(String[] args) {
 
-        String instanceId ="i-070574289cd54d27e";
+        String instanceId ="i-01e59eb5c32ab6331";
         Region region = Region.US_WEST_2;
         Ec2Client ec2 = Ec2Client.builder()
                 .region(region)

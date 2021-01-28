@@ -1,31 +1,36 @@
 package com.example.ec2;
 
-import java.io.InputStream;
-
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import software.amazon.awssdk.services.ec2.Ec2Client;
-import software.amazon.awssdk.services.ec2.model.Instance;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
-public class JSchSSHConnection {
+public class JSchSSHConnectionSlave {
 
     /**
      * Java SSH Connection Program
      */
-    public static void main(String[] args) {
-        String host="ec2-52-34-52-183.us-west-2.compute.amazonaws.com";
+    public static void main(String[] args) throws InterruptedException, IOException {
+        String host="ec2-54-212-80-241.us-west-2.compute.amazonaws.com";
         String user="ubuntu";
-        String command=
-                "hostnamectl set-hostname master &&  " +
-                "docker pull ubuntu && " +
-                "docker rmi -f hello-world && " +
-                "docker run -it --name mycontainer ubuntu /bin/bash && " +
-                "exit && " +
-                "docker ps -a";
+        String command= "sudo bash master_conf.sh";
+
         String privateKeyPath = "key-pair.pem";
+
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("scp -o StrictHostKeyChecking=no -i " + privateKeyPath + " slave_conf.sh "+user+"@"+host+":/home/ubuntu");
+        process.waitFor();
+        BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = "";
+        while ((line =buf.readLine()) != null) {
+            System.out.println(line);
+        }
 
         try{
             JSch jsch = new JSch();

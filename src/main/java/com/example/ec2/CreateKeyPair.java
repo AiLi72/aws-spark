@@ -14,7 +14,7 @@ import java.io.IOException;
 public class CreateKeyPair {
     public static void main(String[] args) {
 
-        String keyName = "KeyPair";
+        String keyName = "KeyPairAi";
         Region region = Region.US_WEST_2;
         Ec2Client ec2 = Ec2Client.builder()
                 .region(region)
